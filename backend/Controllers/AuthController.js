@@ -15,7 +15,7 @@ const login = async (req, res) => {
         if (!user) {
             return res.json({ message: errorMsg, success: false });
         }
-        const isPassEqual = await bcrypt.compare(password, user.password);
+        const isPassEqual=await UserModel.findOne({email:email,password:password});
         if (!isPassEqual) {
             return res.json({ message:"Email and Password did not match!", success: false });
         }
