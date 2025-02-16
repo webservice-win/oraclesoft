@@ -7,7 +7,9 @@ import { IoIosArrowForward } from "react-icons/io";
 import { BiImport } from "react-icons/bi";
 import { LuSaveAll } from "react-icons/lu";
 import axios from 'axios';
-
+import { FaClipboard, FaClipboardCheck } from 'react-icons/fa';
+import { MdOutlineContentCopy } from "react-icons/md";
+import { FaCheck } from "react-icons/fa6";
 const Viewcustomer = () => {
   const navigate = useNavigate();
   const { activesidebar, setactivesidebar, activetopbar, setactivetopbar } = useContext(Contextapi);
@@ -15,6 +17,22 @@ const Viewcustomer = () => {
   const [customer_data, set_customer] = useState([]);
   const base_url = import.meta.env.VITE_API_KEY_Base_URL;
   const {id}=useParams();
+  // ------------email and password copy button------------------
+  const [emailCopyStatus, setEmailCopyStatus] = useState('');
+  const [passwordCopyStatus, setPasswordCopyStatus] = useState('');
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(customer_data.email)
+      .then(() => setEmailCopyStatus('Copied!'))
+      .catch(() => setEmailCopyStatus('Failed to copy'));
+  };
+
+  const handleCopyPassword = () => {
+    navigator.clipboard.writeText(customer_data.password)
+      .then(() => setPasswordCopyStatus('Copied!'))
+      .catch(() => setPasswordCopyStatus('Failed to copy'));
+  };
+
   const uploadpost = () => {
     setmodal(true);
   };
@@ -63,8 +81,34 @@ const Viewcustomer = () => {
               <div key={customer_data._id} className="bg-white border border-gray-200 rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
                 <h2 className="text-xl font-bold text-gray-800 mb-4">{customer_data.name}</h2>
                 <div className="space-y-2">
-                  <p className="text-[17px] text-gray-600"><span className="font-semibold">Email:</span> {customer_data.email}</p>
-                  <p className="text-[17px] text-gray-600"><span className="font-semibold">WhatsApp:</span> {customer_data.whatsapp}</p>
+                <p className="text-[17px] text-gray-600">
+        <span className="font-semibold">Email:</span> {customer_data.email}
+        <button
+          onClick={handleCopyEmail}
+          className="ml-2 text-blue-500 hover:text-blue-700 transition-all"
+        >
+          {emailCopyStatus === 'Copied!' ? (
+            <FaCheck className="text-green-500" />
+          ) : (
+            <MdOutlineContentCopy className="text-blue-500 hover:text-blue-700" />
+          )}
+        </button>
+        {emailCopyStatus && <span className="text-sm text-green-500 ml-2">{emailCopyStatus}</span>}
+      </p>
+      <p className="text-[17px] text-gray-600">
+        <span className="font-semibold">Password:</span> {customer_data.password}
+        <button
+          onClick={handleCopyPassword}
+          className="ml-2 text-purple-500 hover:text-purple-700 transition-all"
+        >
+          {passwordCopyStatus === 'Copied!' ? (
+            <FaCheck className="text-green-500" />
+          ) : (
+            <MdOutlineContentCopy className="text-purple-500 hover:text-purple-700" />
+          )}
+        </button>
+        {passwordCopyStatus && <span className="text-sm text-green-500 ml-2">{passwordCopyStatus}</span>}
+      </p>              <p className="text-[17px] text-gray-600"><span className="font-semibold">WhatsApp:</span> {customer_data.whatsapp}</p>
                   <p className="text-[17px] text-gray-600"><span className="font-semibold">Telegram:</span> {customer_data.telegram}</p>
                   <p className="text-[17px] text-gray-600"><span className="font-semibold">Role:</span> {customer_data.role}</p>
                   <p className="text-[17px] text-gray-600"><span className="font-semibold">Deposit Balance:</span> ${customer_data.deposit_balance}</p>
