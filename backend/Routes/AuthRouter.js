@@ -77,6 +77,8 @@ router.post('/signup', async (req, res) => {
         }
 
         const userModel = new UserModel({ name, email, password, whatsapp, telegram });
+        // Hash password before saving
+        userModel.password = await bcrypt.hash(password, 10);
         await userModel.save();
 
         // Send welcome email
