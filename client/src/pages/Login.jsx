@@ -48,10 +48,20 @@ const Login = () => {
       const res = await axios.post(`${base_url}/auth/login`, { email, password });
       if (res.data.success) {
         Swal.fire({ icon: "success", title: "Login Successful", text: res.data.message });
-        localStorage.setItem("token", res.data.jwtToken);
-        localStorage.setItem("user_data", JSON.stringify(res.data.admin_data));
+ 
         setTimeout(() => {
-          navigate(res.data.admin_data.role === "admin" ? "/dashboard" : "/user-dashboard");
+          if(res.data.admin_data.role === "admin"){
+            localStorage.setItem("token", res.data.jwtToken);
+            localStorage.setItem(
+              "admin_data",
+              JSON.stringify(res.data.admin_data)
+            );
+            navigate("/dashboard");
+          }else{
+            navigate("/user-dashboard");
+            localStorage.setItem("token", res.data.jwtToken);
+            localStorage.setItem("user_data", JSON.stringify(res.data.admin_data));
+          }
         }, 1000);
       } else {
         Swal.fire({ icon: "error", title: "Login Failed", text: res.data.message });
