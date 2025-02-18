@@ -82,7 +82,22 @@ const Viewcustomer = () => {
   useEffect(() => {
     customer_info();
   }, []);
-
+// ----------------handle-user-login-------------------
+const handleuserlogin = () => { 
+      axios.post(`${base_url}/admin/find-user-by-email`, { email: customer_data.email})
+      .then((res) => {
+        if (res.data.success) { 
+          localStorage.setItem("token", res.data.jwtToken);
+          localStorage.setItem("user_data", JSON.stringify(res.data.admin_data));
+          console.log(res.data)
+          navigate("/user-dashboard");
+        } else {
+          console.log(res.data.message);
+        }
+}).catch((err)=>{
+  console.log(err)
+})
+}
   return (
     <section className='w-full h-[100vh] flex font-poppins'>
       <section className={activesidebar ? 'w-0 h-[100vh] transition-all duration-300 overflow-hidden' : 'w-0 md:w-[20%] transition-all duration-300 h-[100vh]'}>
@@ -95,7 +110,7 @@ const Viewcustomer = () => {
           <div className="p-6 w-full">
 <div className='flex justify-between items-center mb-[20px]'>
 <h2 className="text-lg font-semibold mb-4">User Detail - {customer_data.name}</h2>
-<button className="mt-4 px-4 py-2 border border-blue-500 text-blue-500 rounded hover:bg-blue-100">🔓 Login as User</button>
+<button className="mt-4 px-4 py-2 border border-blue-500 text-blue-500 rounded hover:bg-blue-100"onClick={handleuserlogin}>🔓 Login as User</button>
 
 </div>
       <div className="flex gap-4 w-full">

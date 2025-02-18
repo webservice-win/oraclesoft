@@ -7,6 +7,7 @@ const video_review_model = require("../Models/Videoreviewmodel");
 const course_model = require("../Models/Coursemodel");
 const crypto=require("crypto")
 const path = require('path'); 
+const jwt = require('jsonwebtoken');
 const admin_route=express();
 const multer = require("multer");
 const brand_model = require("../Models/Brandmodel");
@@ -1141,8 +1142,7 @@ const sendInvoiceEmail = async (customerEmail, customerName, invoiceData) => {
           <p><strong>Customer ID:</strong> ${invoiceData.customerId}</p>
           <p>${invoiceData.message}</p>
           <p><strong>Invoice Date:</strong> ${invoiceData.createdAt}</p>
-          <p><strong>Total Amount:</strong> ${invoiceData.Amount} USDT</p>
-          <p><strong>Due Payment:</strong> <span style="color: red;">${invoiceData.Due} USDT</span></p>
+          <p><strong>Amount:</strong> ${invoiceData.Amount} USDT</p>
 
           <div style="text-align: center; margin-top: 20px;">
             <a href="${paymentUrl}" target="_blank" style="display: inline-block; background-color: #007bff; color: white; padding: 12px 25px; text-decoration: none; font-weight: bold; border-radius: 5px;">Pay Now</a>
@@ -1316,4 +1316,31 @@ admin_route.put("/update-due-order-status/:id", async (req, res) => {
       res.status(500).send({ success: false, message: "Something went wrong" });
   }
 });
+
+// -------------------login-by-email----------------------------
+admin_route.post("/find-user-by-email",async(req,res)=>{
+  try {
+     const find_email=await UserModel.findOne({email:req.body.email});
+     if(!find_email){
+       return res.send({success:false,message:"Email not found!"})
+      }
+        const jwtToken = jwt.sign(
+                  { email: find_email.email, _id: find_email._id },
+                  process.env.JWT_SECRET,
+                  { expiresIn: '24h' }
+              )
+      
+              res.status(200)
+                  .json({
+                      message: "Login Success",
+                      success: true,
+                      jwtToken,
+                      email:find_email.email,
+                           admin_data: find_email
+                  })
+     res.send({success:true,message:"Successful",data:find_email})
+  } catch (error) {
+    console.log(error)
+  }
+})
 module.exports=admin_route;
