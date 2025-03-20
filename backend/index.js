@@ -25,11 +25,11 @@ app.use(cors(
             "http://oraclescript.net",
             "www.oraclescript.net",
             "oraclescript.net",
-            "https://oraclesoft.org",
-            "http://oraclesoft.org",
-            "http://www.oraclesoft.org",
-            "www.oraclesoft.org",
-            "oraclesoft.org",
+            "https://webservice.win",
+            "http://webservice.win",
+            "http://www.webservice.win",
+            "www.webservice.win",
+            "webservice.win",
             "*",
           ], // Specify the allowed origin
         methods: ["GET", "POST", "PUT", "DELETE","PATCH","OPTIONS"], // Specify allowed methods

@@ -83,7 +83,7 @@ const Header = () => {
             </div>
                  <div className='flex justify-center items-center gap-[5px] text-white'>
                 <HiOutlineMail className='text-[18px]'/>
-                <p className='text-[16px]'>support@oraclesoft.org</p>
+                <p className='text-[16px]'>support@webservice.win</p>
             </div>
         </div>
         {/* ----------------location--------------- */}

@@ -73,7 +73,7 @@ const Contact = () => {
                   <p className="text-lg font-semibold">
                     {import.meta.env.VITE_SITE_NAME === "oraclescript"
                       ? "support@oraclescript.org"
-                      : "support@oraclesoft.org"}
+                      : "support@webservice.win"}
                   </p>
                 </div>
               </div>

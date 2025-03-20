@@ -51,7 +51,7 @@ const sendWelcomeEmail = async (email, name) => {
                     <footer style="margin-top: 20px; padding-top: 10px; border-top: 1px solid #ccc;">
                         <p>Best regards,</p>
                         <p><strong>Oracle</strong></p>
-                        <p>Contact us at: <a href="mailto:support@oraclesoft.org">support@oraclesoft.org</a></p>
+                        <p>Contact us at: <a href="mailto:support@webservice.win">support@webservice.win</a></p>
                     </footer>
                 </div>
             </div>
